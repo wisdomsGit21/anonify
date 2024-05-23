@@ -1,0 +1,20 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1716409688021,
+      "tag": "0000_stormy_rick_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1716484580904,
+      "tag": "0001_wet_enchantress",
+      "breakpoints": true
+    }
+  ]
+}
