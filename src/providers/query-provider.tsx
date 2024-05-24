@@ -25,10 +25,6 @@ function getQueryClient() {
 
 export function QueryProvider({ children }: PropsWithChildren) {
   const queryClient = getQueryClient();
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["messages"] });
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
