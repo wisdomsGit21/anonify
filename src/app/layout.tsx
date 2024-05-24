@@ -15,6 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
+      <link rel='icon' href='/logo.svg' sizes='any' />
       <body className={`dark font-raleway antialiased`}>
         <QueryProvider>{children}</QueryProvider>
         <Toaster richColors theme='dark' position='top-center' />
