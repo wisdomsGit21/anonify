@@ -5,22 +5,25 @@ import MessageBox from "@/components/messageBox";
 import { useGetMessages } from "@/features/useGetMessages";
 
 import WaveLoader from "@/components/waveLoader";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Home, Share, VenetianMask } from "lucide-react";
 import Link from "next/link";
-import { useStore } from "@/store/store";
-import { useShallow } from "zustand/react/shallow";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Image from "next/image";
+import { useGetUser } from "@/features/useGetUser";
 
 export default function Messages() {
   const params = useParams<{ slug: string }>();
   const { data, isLoading } = useGetMessages(params.slug);
-
-  const { username } = useStore(
-    useShallow((state) => ({
-      username: state.username,
-    }))
+  const { data: userData, isLoading: userDataLoading } = useGetUser(
+    params.slug
   );
+
   const handleShare = async () => {
     try {
       const shareData = {
@@ -37,19 +40,54 @@ export default function Messages() {
     <main className='mx-auto relative w-full lg:container px-4 '>
       <section className='lg:p-4 py-4 lg:mb-72   h-full mb-12'>
         <div className='flex flex-col lg:flex-row lg:items-center justify-between mt-4 gap-4 mb-6'>
-          <h1 className='text-3xl font-bold '> {`${username}'s Lobby`}</h1>
-          <div className='flex items-center gap-4'>
-            <Button onClick={handleShare} size={"icon"}>
-              <Share />
-            </Button>
+          <div>
+            <h1 className='text-3xl font-bold '>
+              {" "}
+              {userDataLoading ? "loading..." : `${userData?.username}'s Lobby`}
+            </h1>
+            <p className='text-muted-foreground mt-1 text-xs'>
+              Share to your friends, have fun.
+            </p>
+          </div>
+          <div className='flex items-center  gap-4'>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger
+                  onClick={handleShare}
+                  className={buttonVariants({
+                    variant: "default",
+                    size: "icon",
+                  })}
+                >
+                  <Share />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Share to your friends</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             <Button asChild variant={"secondary"}>
               <Link href={"/onboard"}>Create new lobby</Link>
             </Button>
-            <Button asChild size={"icon"}>
-              <Link href={"/"}>
-                <Home />
-              </Link>
-            </Button>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger
+                  className={buttonVariants({
+                    variant: "default",
+                    size: "icon",
+                  })}
+                >
+                  <Link href={"/"}>
+                    <Home />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Go back home</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
 
@@ -70,7 +108,7 @@ export default function Messages() {
         ) : (
           data?.map((datum) => {
             return (
-              <>
+              <div key={datum.id}>
                 <div className='flex items-start my-8   gap-2.5'>
                   <VenetianMask className='bg-slate-900/90 lg:h-12 rounded-full lg:w-12 w-10 h-10 p-1.5 text-teal-500' />
                   <div className='flex flex-col w-full max-w-[520px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700'>
@@ -82,7 +120,7 @@ export default function Messages() {
                     </span>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })
         )}

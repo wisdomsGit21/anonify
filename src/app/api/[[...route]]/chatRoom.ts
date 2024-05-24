@@ -17,6 +17,10 @@ const contentSchema = z.object({
   content: z.string(),
 });
 
+const userSchame = z.object({
+  id: z.string(),
+});
+
 // const wss = new WebSocketServer({ noServer: true });
 
 // wss.on("connection", (ws, request) => {
@@ -83,12 +87,12 @@ const app = new Hono()
   .get("/:chatRoomId", zValidator("param", paramSchema), async (c) => {
     const { chatRoomId } = c.req.valid("param");
     const validChatRoom = await db.query.chatRoom.findFirst({
-      columns: {
-        id: true,
-      },
+      // columns: {
+      //   id: true,
+      // },
       where: eq(chatRoom.id, Number(chatRoomId)),
     });
-    if (!validChatRoom) {
+    if (!validChatRoom?.id) {
       return c.json({ message: "chat room messages not found" }, 404);
     }
     const msgs = await db.query.message.findMany({
@@ -96,6 +100,7 @@ const app = new Hono()
     });
     return c.json(msgs);
   })
+
   .post(
     "/:chatRoomId/message",
     zValidator("param", paramSchema),
@@ -118,6 +123,19 @@ const app = new Hono()
         .returning();
       return c.json(message);
     }
-  );
+  )
+  .get("/user/:id", zValidator("param", userSchame), async (c) => {
+    const { id } = c.req.valid("param");
+    const chatRoom = await db.query.chatRoom.findFirst({
+      where: eq(messages.id, Number(id)),
+    });
+    if (!chatRoom) {
+      return c.json({ message: "chat not found" }, 404);
+    }
 
+    const user = await db.query.user.findFirst({
+      where: eq(users.id, chatRoom.ownerId),
+    });
+    return c.json(user);
+  });
 export default app;

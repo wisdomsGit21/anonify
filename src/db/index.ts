@@ -10,7 +10,7 @@ const client = createClient({
 
 export const db = drizzle(client, {
   schema,
-  logger: true,
+  logger: false,
 });
 
 export type db = typeof db;
