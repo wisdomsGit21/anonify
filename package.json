@@ -12,6 +12,7 @@
     "db:studio": "bunx drizzle-kit studio"
   },
   "dependencies": {
+    "@hono/node-server": "^1.11.1",
     "@hono/zod-validator": "^0.2.1",
     "@hookform/resolvers": "^3.4.2",
     "@libsql/client": "^0.6.0",
@@ -35,17 +36,21 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "ws": "^8.17.0",
     "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^20",
+    "@types/node": "^20.12.12",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/ws": "^8.5.10",
     "drizzle-kit": "^0.21.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",

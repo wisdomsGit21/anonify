@@ -34,8 +34,8 @@ export default function Messages() {
     }
   };
   return (
-    <main className='mx-auto lg:container px-4 '>
-      <section className='lg:p-4 py-4 h-screen'>
+    <main className='mx-auto relative w-full lg:container px-4 '>
+      <section className='lg:p-4 py-4 lg:mb-72   h-full mb-12'>
         <div className='flex flex-col lg:flex-row lg:items-center justify-between mt-4 gap-4 mb-6'>
           <h1 className='text-3xl font-bold '> {`${username}'s Lobby`}</h1>
           <div className='flex items-center gap-4'>
@@ -54,11 +54,11 @@ export default function Messages() {
         </div>
 
         {isLoading ? (
-          <div className='flex items-center h-full justify-center -mt-16'>
+          <div className='p-3  absolute top-96 lg:top-80 2xl:top-96 left-[44%] lg:left-[47%] 2xl:left-[50%]    '>
             <WaveLoader />
           </div>
         ) : data?.length == 0 ? (
-          <div className='flex flex-col items-center justify-center -mt-16 gap-3  h-full'>
+          <div className='flex flex-col mt-16 2xl:mt-30 items-center justify-center  gap-3  h-full'>
             <Image
               src={"/not-found.svg"}
               alt='not found image'

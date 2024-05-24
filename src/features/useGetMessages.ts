@@ -15,6 +15,7 @@ export const useGetMessages = (param: string) => {
       const data = await response.json();
       return data;
     },
+    refetchInterval: 2000,
   });
   return query;
 };

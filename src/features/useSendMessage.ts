@@ -27,8 +27,8 @@ export const useSendMessage = () => {
       const data = await response.json();
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["messages"] });
+    onSuccess: (_, { chatRoomId }) => {
+      queryClient.invalidateQueries({ queryKey: ["messages", chatRoomId] });
     },
   });
   return mutation;

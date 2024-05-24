@@ -48,7 +48,7 @@ export default function MessageBox({ chatRoomId }: { chatRoomId: string }) {
   }
 
   return (
-    <div className='sticky  lg:inset-x-16 lg:py-4 lg:px-0 z-30 inset-x-4   rounded-md bottom-0'>
+    <div className='fixed  lg:inset-x-16 lg:py-4 lg:px-0 z-30 inset-x-4  bg-background   py-1 bottom-0'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -72,12 +72,12 @@ export default function MessageBox({ chatRoomId }: { chatRoomId: string }) {
               </FormItem>
             )}
           />
-          <Button size={"icon"} className='bg-teal-500'>
+          <Button disabled={isPending} size={"icon"} className='bg-teal-500'>
             {isPending ? <Loader className='animate-spin' /> : <Send />}
           </Button>
         </form>
       </Form>
-      <div className='px-4 py-3 text-muted-foreground'>
+      <div className='px-4 py-1 text-muted-foreground'>
         <p className='text-center text-sm font-medium'>
           Made with ❤️ by {""}
           <a

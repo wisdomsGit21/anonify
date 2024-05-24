@@ -7,6 +7,7 @@ import { chatRoom } from "@/db/schema";
 import users from "@/db/schema/users";
 import { eq } from "drizzle-orm";
 import messages from "@/db/schema/messages";
+// import { WebSocketServer } from "ws";
 
 const paramSchema = z.object({
   chatRoomId: z.string(),
@@ -15,6 +16,37 @@ const paramSchema = z.object({
 const contentSchema = z.object({
   content: z.string(),
 });
+
+// const wss = new WebSocketServer({ noServer: true });
+
+// wss.on("connection", (ws, request) => {
+//   ws.on("message", async (message) => {
+//     const data = JSON.parse(message.toString());
+//     const { chatRoomId, content } = data;
+
+//     const validChatRoom = await db.query.chatRoom.findFirst({
+//       columns: { id: true },
+//       where: eq(chatRoom.id, Number(chatRoomId)),
+//     });
+
+//     if (validChatRoom) {
+//       const newMessage = await db
+//         .insert(messages)
+//         .values({
+//           chatRoomId: Number(validChatRoom.id),
+//           content,
+//         })
+//         .returning();
+
+//       // Broadcast the new message to all connected clients
+//       wss.clients.forEach((client) => {
+//         if (client.readyState === ws.OPEN) {
+//           client.send(JSON.stringify(newMessage[0]));
+//         }
+//       });
+//     }
+//   });
+// });
 
 const app = new Hono()
   .post(
